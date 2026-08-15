@@ -82,6 +82,8 @@ enum Action: Codable, Equatable, Hashable {
     case missionControl
     case appExpose
     case showDesktop
+    case switchSpaceLeft
+    case switchSpaceRight
     case focusTextField
 
     var displayName: String {
@@ -97,6 +99,8 @@ enum Action: Codable, Equatable, Hashable {
         case .missionControl: return "Mission Control"
         case .appExpose: return "App Exposé"
         case .showDesktop: return "Show Desktop"
+        case .switchSpaceLeft: return "Switch Space left"
+        case .switchSpaceRight: return "Switch Space right"
         case .focusTextField: return "Focus text field"
         }
     }
@@ -130,6 +134,8 @@ struct Profile: Codable, Equatable {
     static let `default` = Profile(
         bindings: [
             .dpadUp: .missionControl,
+            .dpadLeft: .switchSpaceLeft,
+            .dpadRight: .switchSpaceRight,
             .rightStick: .mouseMove,
             .leftTrigger: .mouseClickLeft,
             .rightTrigger: .mouseClickRight,

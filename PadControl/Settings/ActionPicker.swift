@@ -68,6 +68,8 @@ struct ActionPicker: View {
             .missionControl,
             .appExpose,
             .showDesktop,
+            .switchSpaceLeft,
+            .switchSpaceRight,
             .focusTextField
         ]
     }
@@ -98,6 +100,8 @@ private enum ActionKind: Hashable {
     case missionControl
     case appExpose
     case showDesktop
+    case switchSpaceLeft
+    case switchSpaceRight
     case focusTextField
 
     init(action: Action, stick: Bool) {
@@ -112,6 +116,8 @@ private enum ActionKind: Hashable {
         case .missionControl: self = .missionControl
         case .appExpose: self = .appExpose
         case .showDesktop: self = .showDesktop
+        case .switchSpaceLeft: self = .switchSpaceLeft
+        case .switchSpaceRight: self = .switchSpaceRight
         case .focusTextField: self = .focusTextField
         }
         if stick, self != .mouseMove, self != .mouseScroll, self != .unbound {
@@ -131,6 +137,8 @@ private enum ActionKind: Hashable {
         case .missionControl: return "Mission Control"
         case .appExpose: return "App Exposé"
         case .showDesktop: return "Show Desktop"
+        case .switchSpaceLeft: return "Switch Space left"
+        case .switchSpaceRight: return "Switch Space right"
         case .focusTextField: return "Focus text field"
         }
     }
@@ -147,6 +155,8 @@ private enum ActionKind: Hashable {
         case .missionControl: return .missionControl
         case .appExpose: return .appExpose
         case .showDesktop: return .showDesktop
+        case .switchSpaceLeft: return .switchSpaceLeft
+        case .switchSpaceRight: return .switchSpaceRight
         case .focusTextField: return .focusTextField
         }
     }
