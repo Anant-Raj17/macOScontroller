@@ -34,6 +34,13 @@ struct ActionPicker: View {
                     captureShortcut = false
                 }
             }
+
+            if case .keyCombo(let keyCode, let flags) = current,
+               KeyChord.isModifierOnly(keyCode: keyCode, flags: CGEventFlags(rawValue: flags)) {
+                Text("Hold the controller button to hold this key (push-to-talk).")
+                    .font(.caption2)
+                    .foregroundStyle(.secondary)
+            }
         }
         .padding(12)
         .frame(maxWidth: .infinity, alignment: .leading)
@@ -48,11 +55,11 @@ struct ActionPicker: View {
         return false
     }
 
-    private var keyComboValues: (keyCode: UInt16, flags: UInt64) {
+    private var keyComboValues: (keyCode: UInt16?, flags: UInt64) {
         if case .keyCombo(let keyCode, let flags) = current {
             return (keyCode, flags)
         }
-        return (0, 0)
+        return (nil, 0)
     }
 
     private var kindOptions: [ActionKind] {

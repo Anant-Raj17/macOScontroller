@@ -50,9 +50,16 @@ If mapping does nothing after a rebuild, remove PadControl from the list and add
 - Analog sticks are sampled with `CADisplayLink` only while they sit outside the deadzone
 - Pointer motion is posted as HID mouse events (not a cursor warp), so hover and drag work
 - Mission Control is opened via `/System/Applications/Mission Control.app`
-- Text-field focus walks the accessibility tree of the focused window, draws a short overlay, then focuses the field (click fallback)
+- Text-field focus walks the accessibility tree of the frontmost app (skipping PadControl itself when Settings is open), draws a short overlay, then focuses the field (click fallback)
+- Keyboard shortcuts accept chords, single keys, and lone modifiers (e.g. Right ⌥). Lone modifiers are held while the controller button is held — useful for push-to-talk dictation
 
 Mappings are stored at `~/Library/Application Support/PadControl/profile.json`.
+
+## To-do
+
+- [ ] Replace the menu bar icon with something clearer and more on-brand
+- [ ] Redesign the Settings page so it feels sleeker and more presentable
+- [ ] Ideate better default mappings and other ways to use the remaining buttons (workflows, dictation, window management, etc.)
 
 ## Not in v1
 

@@ -3,10 +3,11 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 54;
+	objectVersion = 56;
 	objects = {
 
 /* Begin PBXBuildFile section */
+		00462B677A018262FF3CF401 /* ScreenCoords.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEB4A1EF8D0719DEC6F6337D /* ScreenCoords.swift */; };
 		0760FDAB4CF460A88C568DAD /* Models.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DB93839B2B27DCF42B188B7 /* Models.swift */; };
 		1B86484B50278F779D362E6F /* AccessibilityGate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 899E7DCAA6A5E07FCE3F9BB5 /* AccessibilityGate.swift */; };
 		2D21A10F444888EFEB75E3E8 /* ProfileStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64DBBB7C199140DDC4314C13 /* ProfileStore.swift */; };
@@ -46,6 +47,7 @@
 		A8CAC6DA119D7F75589BB738 /* ControllerDiagramView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ControllerDiagramView.swift; sourceTree = "<group>"; };
 		B3BCD7F1B85C51FE57E35D52 /* MouseInjector.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MouseInjector.swift; sourceTree = "<group>"; };
 		C45FF0F44F492595DC3F6C7C /* AppModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppModel.swift; sourceTree = "<group>"; };
+		CEB4A1EF8D0719DEC6F6337D /* ScreenCoords.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScreenCoords.swift; sourceTree = "<group>"; };
 		D8C308969A3780BE26CEB5F4 /* PadControlApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PadControlApp.swift; sourceTree = "<group>"; };
 		E19F3D590F42F5377BE51A4E /* MenuBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuBarView.swift; sourceTree = "<group>"; };
 		E55FCCC6AA3E44CD100A15C2 /* ShortcutRecorder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShortcutRecorder.swift; sourceTree = "<group>"; };
@@ -95,6 +97,7 @@
 			isa = PBXGroup;
 			children = (
 				A1A2A30F79503F70B8F4CC27 /* HighlightOverlay.swift */,
+				CEB4A1EF8D0719DEC6F6337D /* ScreenCoords.swift */,
 				549B18AD475FEE1B71F407DF /* TextFieldFocuser.swift */,
 			);
 			path = Accessibility;
@@ -177,7 +180,7 @@
 			isa = PBXProject;
 			attributes = {
 				BuildIndependentTargetsInParallel = YES;
-				LastUpgradeCheck = 1430;
+				LastUpgradeCheck = 2660;
 				TargetAttributes = {
 					B8047073886026CCFE1E2DCC = {
 						ProvisioningStyle = Automatic;
@@ -230,6 +233,7 @@
 				D9421B99A4EA360F83936D24 /* MouseInjector.swift in Sources */,
 				EB66697243C77CFE91B85027 /* PadControlApp.swift in Sources */,
 				2D21A10F444888EFEB75E3E8 /* ProfileStore.swift in Sources */,
+				00462B677A018262FF3CF401 /* ScreenCoords.swift in Sources */,
 				9FAFCF8C58DDFF7E3BD32828 /* SettingsView.swift in Sources */,
 				ABE9B3E1407BBE9FC2A867C2 /* ShortcutRecorder.swift in Sources */,
 				CC3A41CFC5F6612BA98FB606 /* SystemActions.swift in Sources */,
@@ -271,6 +275,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
@@ -331,6 +336,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";

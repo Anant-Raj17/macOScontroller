@@ -27,8 +27,16 @@ final class MappingEngine: NSObject {
         case .mouseClickMiddle:
             pressed ? mouse.down(.center) : mouse.up(.center)
         case .keyCombo(let keyCode, let flags):
-            if pressed {
-                keyboard.tap(keyCode: CGKeyCode(keyCode), flags: CGEventFlags(rawValue: flags))
+            let eventFlags = CGEventFlags(rawValue: flags)
+            if KeyChord.isModifierOnly(keyCode: keyCode, flags: eventFlags) {
+                // Hold semantics for lone modifiers (dictation / push-to-talk).
+                if pressed {
+                    keyboard.modifierDown(CGKeyCode(keyCode))
+                } else {
+                    keyboard.modifierUp(CGKeyCode(keyCode))
+                }
+            } else if pressed {
+                keyboard.tap(keyCode: CGKeyCode(keyCode), flags: eventFlags)
             }
         case .missionControl:
             if pressed { SystemActions.missionControl() }
@@ -58,6 +66,7 @@ final class MappingEngine: NSObject {
         if mouse.heldButton == .left { mouse.up(.left) }
         if mouse.heldButton == .right { mouse.up(.right) }
         if mouse.heldButton == .center { mouse.up(.center) }
+        keyboard.releaseHeldModifier()
     }
 
     private func stickNeedsPolling(_ analog: AnalogState) -> Bool {
