@@ -14,7 +14,25 @@ final class ProfileStore: ObservableObject {
         let directory = support.appendingPathComponent("PadControl", isDirectory: true)
         try? FileManager.default.createDirectory(at: directory, withIntermediateDirectories: true)
         url = directory.appendingPathComponent("profile.json")
-        profile = Self.load(from: url) ?? .default
+        let loaded = Self.load(from: url) ?? .default
+        let migrated = Self.withSpaceSwitchDefaults(loaded)
+        profile = migrated
+        if migrated != loaded {
+            // didSet does not run during init; persist the filled defaults explicitly.
+            save()
+        }
+    }
+
+    /// Fills D-pad left/right space switching when those inputs were never bound.
+    private static func withSpaceSwitchDefaults(_ profile: Profile) -> Profile {
+        var next = profile
+        if next.bindings[.dpadLeft] == nil {
+            next.bindings[.dpadLeft] = .switchSpaceLeft
+        }
+        if next.bindings[.dpadRight] == nil {
+            next.bindings[.dpadRight] = .switchSpaceRight
+        }
+        return next
     }
 
     func resetToDefaults() {

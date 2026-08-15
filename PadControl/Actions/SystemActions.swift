@@ -20,4 +20,12 @@ enum SystemActions {
     static func showDesktop() {
         keyboard.tap(keyCode: 103, flags: [])
     }
+
+    static func switchSpaceLeft() {
+        keyboard.tapSpaceSwitch(directionKeyCode: 123) // ←
+    }
+
+    static func switchSpaceRight() {
+        keyboard.tapSpaceSwitch(directionKeyCode: 124) // →
+    }
 }

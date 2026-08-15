@@ -44,6 +44,10 @@ final class MappingEngine: NSObject {
             if pressed { SystemActions.appExpose() }
         case .showDesktop:
             if pressed { SystemActions.showDesktop() }
+        case .switchSpaceLeft:
+            if pressed { SystemActions.switchSpaceLeft() }
+        case .switchSpaceRight:
+            if pressed { SystemActions.switchSpaceRight() }
         case .focusTextField:
             if pressed { textFields.focusNext() }
         }
