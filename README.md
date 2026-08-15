@@ -15,6 +15,7 @@ PadControl injects mouse and keyboard events with `CGEvent` and reads the focuse
 All of these are remappable in Settings.
 
 - **D-pad up** — Mission Control
+- **D-pad left / right** — switch Space left / right
 - **Right stick** — move the pointer
 - **Left trigger** — left click (hold to drag)
 - **Right trigger** — right click
