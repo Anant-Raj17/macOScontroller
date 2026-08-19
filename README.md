@@ -28,12 +28,13 @@ All of these are remappable in Settings.
 | Control | Action |
 | --- | --- |
 | D-pad up | Mission Control |
+| D-pad left / right | Switch Space left / right |
 | Right stick | Move pointer |
 | Left trigger | Left click (hold to drag) |
 | Right trigger | Right click |
 | A / Cross | Highlight and focus the next text field in the focused window |
 
-Unbound controls do nothing. Analog sticks can be assigned **Move pointer** or **Scroll**; buttons and triggers can be assigned clicks, a keyboard shortcut, Mission Control, App Exposé, Show Desktop, or text-field focus.
+Unbound controls do nothing. Analog sticks can be assigned **Move pointer** or **Scroll**; buttons and triggers can be assigned clicks, a keyboard shortcut, Mission Control, App Exposé, Show Desktop, Space switching, or text-field focus.
 
 ## Using the app
 
@@ -81,7 +82,8 @@ macOS keys Accessibility grants to the specific binary. After a rebuild, mapping
 - Analog sticks are sampled with `CADisplayLink` only while they sit outside the deadzone
 - Pointer motion is posted as HID mouse events (not a cursor warp), so hover and drag work
 - Mission Control is opened via `/System/Applications/Mission Control.app`
-- Text-field focus walks the accessibility tree of the focused window, draws a short overlay, then focuses the field (click fallback)
+- Text-field focus walks the accessibility tree of the frontmost app (skipping PadControl itself when Settings is open), draws a short overlay, then focuses the field (click fallback)
+- Keyboard shortcuts accept chords, single keys, and lone modifiers (e.g. Right ⌥). Lone modifiers are held while the controller button is held — useful for push-to-talk dictation
 
 Layout:
 
@@ -95,6 +97,12 @@ PadControl/
   Permissions/    Accessibility trust gate
   Settings/       Bindings UI and controller diagram
 ```
+
+## To-do
+
+- [ ] Replace the menu bar icon with something clearer and more on-brand
+- [ ] Redesign the Settings page so it feels sleeker and more presentable
+- [ ] Ideate better default mappings and other ways to use the remaining buttons (workflows, dictation, window management, etc.)
 
 ## Not in v1
 

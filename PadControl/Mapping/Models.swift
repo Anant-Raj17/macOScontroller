@@ -82,6 +82,8 @@ enum Action: Codable, Equatable, Hashable {
     case missionControl
     case appExpose
     case showDesktop
+    case switchSpaceLeft
+    case switchSpaceRight
     case focusTextField
 
     var displayName: String {
@@ -97,6 +99,8 @@ enum Action: Codable, Equatable, Hashable {
         case .missionControl: return "Mission Control"
         case .appExpose: return "App Exposé"
         case .showDesktop: return "Show Desktop"
+        case .switchSpaceLeft: return "Switch Space left"
+        case .switchSpaceRight: return "Switch Space right"
         case .focusTextField: return "Focus text field"
         }
     }
@@ -130,6 +134,8 @@ struct Profile: Codable, Equatable {
     static let `default` = Profile(
         bindings: [
             .dpadUp: .missionControl,
+            .dpadLeft: .switchSpaceLeft,
+            .dpadRight: .switchSpaceRight,
             .rightStick: .mouseMove,
             .leftTrigger: .mouseClickLeft,
             .rightTrigger: .mouseClickRight,
@@ -146,7 +152,22 @@ struct Profile: Codable, Equatable {
 }
 
 enum KeyChord {
+    /// Virtual key codes for physical modifier keys (left/right distinguished).
+    static let modifierKeyCodes: Set<UInt16> = [54, 55, 56, 57, 58, 59, 60, 61, 62, 63]
+
+    static func isModifierKeyCode(_ keyCode: UInt16) -> Bool {
+        modifierKeyCodes.contains(keyCode)
+    }
+
+    /// A lone modifier (e.g. Right Option) — not a chord with another key.
+    static func isModifierOnly(keyCode: UInt16, flags: CGEventFlags) -> Bool {
+        isModifierKeyCode(keyCode) && flags.isEmpty
+    }
+
     static func format(keyCode: UInt16, flags: CGEventFlags) -> String {
+        if isModifierOnly(keyCode: keyCode, flags: flags) {
+            return modifierName(keyCode)
+        }
         var parts: [String] = []
         if flags.contains(.maskControl) { parts.append("⌃") }
         if flags.contains(.maskAlternate) { parts.append("⌥") }
@@ -165,7 +186,52 @@ enum KeyChord {
         return flags
     }
 
+    static func flagMask(forModifierKeyCode keyCode: UInt16) -> CGEventFlags {
+        switch keyCode {
+        case 54, 55: return .maskCommand
+        case 56, 60: return .maskShift
+        case 57: return .maskAlphaShift
+        case 58, 61: return .maskAlternate
+        case 59, 62: return .maskControl
+        case 63: return .maskSecondaryFn
+        default: return []
+        }
+    }
+
+    /// Whether `flagsChanged` reflects this modifier transitioning to down.
+    static func modifierIsDown(keyCode: UInt16, flags: NSEvent.ModifierFlags) -> Bool {
+        let device = flags.intersection(.deviceIndependentFlagsMask)
+        switch keyCode {
+        case 54, 55: return device.contains(.command)
+        case 56, 60: return device.contains(.shift)
+        case 57: return device.contains(.capsLock)
+        case 58, 61: return device.contains(.option)
+        case 59, 62: return device.contains(.control)
+        case 63: return device.contains(.function)
+        default: return false
+        }
+    }
+
+    static func modifierName(_ keyCode: UInt16) -> String {
+        switch keyCode {
+        case 54: return "Right ⌘"
+        case 55: return "Left ⌘"
+        case 56: return "Left ⇧"
+        case 57: return "Caps Lock"
+        case 58: return "Left ⌥"
+        case 59: return "Left ⌃"
+        case 60: return "Right ⇧"
+        case 61: return "Right ⌥"
+        case 62: return "Right ⌃"
+        case 63: return "Fn"
+        default: return "Key \(keyCode)"
+        }
+    }
+
     static func keyName(_ keyCode: UInt16) -> String {
+        if isModifierKeyCode(keyCode) {
+            return modifierName(keyCode)
+        }
         switch keyCode {
         case 0: return "A"
         case 1: return "S"
