@@ -1,6 +1,8 @@
 import SwiftUI
 
 struct SettingsView: View {
+    static let windowSize = CGSize(width: 760, height: 620)
+
     var body: some View {
         TabView {
             GeneralPane()
@@ -10,6 +12,7 @@ struct SettingsView: View {
             SticksPane()
                 .tabItem { Label("Sticks", systemImage: "l.joystick") }
         }
+        .frame(minWidth: Self.windowSize.width, minHeight: Self.windowSize.height)
     }
 }
 
@@ -79,7 +82,7 @@ private struct GeneralPane: View {
             }
         }
         .formStyle(.grouped)
-        .frame(width: 520, height: 460)
+        .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
     }
 
     private var launchAtLoginBinding: Binding<Bool> {
@@ -123,7 +126,6 @@ private struct MappingPane: View {
             .frame(maxHeight: .infinity)
         }
         .background(Color(nsColor: .windowBackgroundColor))
-        .frame(minWidth: 760, minHeight: 620)
         .onChange(of: model.lastInput) { _, input in
             if let input {
                 selectedInput = input
@@ -192,7 +194,7 @@ private struct SticksPane: View {
             }
         }
         .formStyle(.grouped)
-        .frame(width: 520, height: 480)
+        .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
     }
 
     private func stickMeter(title: String, vector: SIMD2<Float>) -> some View {
