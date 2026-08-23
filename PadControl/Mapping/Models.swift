@@ -53,6 +53,65 @@ enum ControlInput: String, Codable, CaseIterable, Identifiable, Hashable {
         self == .leftStick || self == .rightStick
     }
 
+    var shortLabel: String {
+        switch self {
+        case .buttonA: return "A"
+        case .buttonB: return "B"
+        case .buttonX: return "X"
+        case .buttonY: return "Y"
+        case .leftShoulder: return "LB"
+        case .rightShoulder: return "RB"
+        case .leftTrigger: return "LT"
+        case .rightTrigger: return "RT"
+        case .leftThumbstickButton: return "L3"
+        case .rightThumbstickButton: return "R3"
+        case .dpadUp: return "D-pad ↑"
+        case .dpadDown: return "D-pad ↓"
+        case .dpadLeft: return "D-pad ←"
+        case .dpadRight: return "D-pad →"
+        case .leftStick: return "Left stick"
+        case .rightStick: return "Right stick"
+        case .buttonMenu: return "Menu"
+        case .buttonOptions: return "Options"
+        case .buttonHome: return "Home"
+        }
+    }
+
+    enum Group: String, CaseIterable, Identifiable {
+        case face
+        case shoulders
+        case dpad
+        case sticks
+        case system
+
+        var id: String { rawValue }
+
+        var title: String {
+            switch self {
+            case .face: return "Face"
+            case .shoulders: return "Shoulders"
+            case .dpad: return "D-pad"
+            case .sticks: return "Sticks"
+            case .system: return "System"
+            }
+        }
+    }
+
+    var group: Group {
+        switch self {
+        case .buttonA, .buttonB, .buttonX, .buttonY:
+            return .face
+        case .leftShoulder, .rightShoulder, .leftTrigger, .rightTrigger:
+            return .shoulders
+        case .dpadUp, .dpadDown, .dpadLeft, .dpadRight:
+            return .dpad
+        case .leftStick, .rightStick, .leftThumbstickButton, .rightThumbstickButton:
+            return .sticks
+        case .buttonMenu, .buttonOptions, .buttonHome:
+            return .system
+        }
+    }
+
     var symbolName: String {
         switch self {
         case .buttonA, .buttonB, .buttonX, .buttonY:

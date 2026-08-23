@@ -15,15 +15,15 @@ struct ShortcutRecorder: View {
     var body: some View {
         VStack(alignment: .leading, spacing: 6) {
             HStack(spacing: 10) {
-                Text(recording ? "Press a key…" : display)
+                Text(recording ? "Press a shortcut…" : display)
                     .font(.body.monospaced())
                     .padding(.horizontal, 10)
                     .padding(.vertical, 6)
-                    .frame(minWidth: 140, alignment: .leading)
-                    .background(.background, in: RoundedRectangle(cornerRadius: 6, style: .continuous))
+                    .frame(minWidth: 160, alignment: .leading)
+                    .background(Color(nsColor: .textBackgroundColor), in: RoundedRectangle(cornerRadius: 6, style: .continuous))
                     .overlay(
                         RoundedRectangle(cornerRadius: 6, style: .continuous)
-                            .strokeBorder(recording ? Color.accentColor : Color.secondary.opacity(0.35))
+                            .strokeBorder(recording ? Color.accentColor : Color.primary.opacity(0.18), lineWidth: recording ? 2 : 1)
                     )
 
                 Button(recording ? "Cancel" : "Record") {

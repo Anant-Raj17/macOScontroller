@@ -10,12 +10,15 @@ struct ActionPicker: View {
     }
 
     var body: some View {
-        VStack(alignment: .leading, spacing: 10) {
-            Text(input.displayName)
-                .font(.headline)
-            Text("Choose what this control does globally.")
-                .font(.caption)
-                .foregroundStyle(.secondary)
+        VStack(alignment: .leading, spacing: 14) {
+            VStack(alignment: .leading, spacing: 4) {
+                Text(input.displayName)
+                    .font(.title3.weight(.semibold))
+                Text(input.isAnalogStick ? "Stick output while held outside the deadzone." : "Fires on press. Triggers stay down while held.")
+                    .font(.callout)
+                    .foregroundStyle(.secondary)
+                    .fixedSize(horizontal: false, vertical: true)
+            }
 
             Picker("Action", selection: actionKindBinding) {
                 ForEach(kindOptions, id: \.self) { kind in
@@ -24,6 +27,7 @@ struct ActionPicker: View {
             }
             .labelsHidden()
             .pickerStyle(.menu)
+            .frame(maxWidth: .infinity, alignment: .leading)
 
             if captureShortcut || isKeyCombo {
                 ShortcutRecorder(
@@ -35,6 +39,12 @@ struct ActionPicker: View {
                 }
             }
 
+            if current == .unbound {
+                Text("This control does nothing.")
+                    .font(.caption)
+                    .foregroundStyle(.tertiary)
+            }
+
             if case .keyCombo(let keyCode, let flags) = current,
                KeyChord.isModifierOnly(keyCode: keyCode, flags: CGEventFlags(rawValue: flags)) {
                 Text("Hold the controller button to hold this key (push-to-talk).")
@@ -42,9 +52,6 @@ struct ActionPicker: View {
                     .foregroundStyle(.secondary)
             }
         }
-        .padding(12)
-        .frame(maxWidth: .infinity, alignment: .leading)
-        .background(.quaternary.opacity(0.35), in: RoundedRectangle(cornerRadius: 10, style: .continuous))
         .onChange(of: input) { _, _ in
             captureShortcut = false
         }

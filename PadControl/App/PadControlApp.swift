@@ -16,8 +16,9 @@ struct PadControlApp: App {
         Settings {
             SettingsView()
                 .environmentObject(model)
-                .frame(minWidth: 640, minHeight: 520)
+                .frame(minWidth: SettingsView.windowSize.width, minHeight: SettingsView.windowSize.height)
         }
+        .defaultSize(width: SettingsView.windowSize.width, height: SettingsView.windowSize.height)
     }
 
     private var menuIcon: String {
