@@ -134,34 +134,94 @@ private struct MappingPane: View {
     }
 
     private var bindingsList: some View {
-        List(selection: Binding(
-            get: { Optional(selectedInput) },
-            set: { if let value = $0 { selectedInput = value } }
-        )) {
-            ForEach(ControlInput.Group.allCases) { group in
-                Section(group.title) {
-                    ForEach(ControlInput.allCases.filter { $0.group == group }) { input in
-                        HStack(spacing: 10) {
-                            Text(input.shortLabel)
-                                .font(.body.weight(.medium))
-                            Spacer(minLength: 8)
-                            Text(model.store.profile.action(for: input).displayName)
-                                .foregroundStyle(model.store.profile.action(for: input) == .unbound ? .tertiary : .secondary)
-                                .font(.callout.monospaced())
-                        }
-                        .tag(input)
-                        .listRowBackground(
-                            input == model.lastInput
-                                ? Color.accentColor.opacity(0.12)
-                                : Color.clear
-                        )
-                        .accessibilityLabel("\(input.displayName), \(model.store.profile.action(for: input).displayName)")
-                    }
+        ScrollView {
+            VStack(alignment: .leading, spacing: 2) {
+                ForEach(ControlInput.Group.allCases) { group in
+                    bindingsGroup(group)
                 }
             }
+            .padding(.vertical, 4)
         }
-        .listStyle(.inset)
         .frame(minWidth: 280)
+    }
+
+    private func bindingsGroup(_ group: ControlInput.Group) -> some View {
+        VStack(alignment: .leading, spacing: 0) {
+            Text(group.title)
+                .font(.caption.weight(.semibold))
+                .foregroundStyle(.secondary)
+                .textCase(.uppercase)
+                .padding(.horizontal, 12)
+                .padding(.vertical, 8)
+
+            VStack(spacing: 0) {
+                ForEach(ControlInput.allCases.filter { $0.group == group }) { input in
+                    bindingRow(input)
+                }
+            }
+            .background(Color(nsColor: .controlBackgroundColor))
+            .cornerRadius(6)
+            .padding(.horizontal, 12)
+            .padding(.bottom, 12)
+        }
+    }
+
+    private func bindingRow(_ input: ControlInput) -> some View {
+        let action = model.store.profile.action(for: input)
+        let isMapped = action != .unbound
+        let isSelected = input == selectedInput
+        let isActive = input == model.lastInput
+
+        return Button(action: { selectedInput = input }) {
+            HStack(spacing: 10) {
+                Image(systemName: input.symbolName)
+                    .font(.system(size: 13, weight: .semibold))
+                    .foregroundStyle(isSelected ? .white : .secondary)
+                    .frame(width: 20)
+
+                VStack(alignment: .leading, spacing: 2) {
+                    Text(input.shortLabel)
+                        .font(.caption.weight(.semibold))
+                        .foregroundStyle(isSelected ? .white : .primary)
+
+                    if isMapped {
+                        Text(action.displayName)
+                            .font(.caption.monospaced())
+                            .foregroundStyle(isSelected ? Color.white.opacity(0.8) : Color.secondary)
+                            .lineLimit(1)
+                    } else {
+                        Text("Unbound")
+                            .font(.caption)
+                            .foregroundStyle(isSelected ? Color.white.opacity(0.6) : Color.secondary.opacity(0.5))
+                            .italic()
+                    }
+                }
+
+                Spacer(minLength: 8)
+
+                if isMapped {
+                    Image(systemName: "checkmark.circle.fill")
+                        .font(.system(size: 12))
+                        .foregroundStyle(isSelected ? .white : Color.green.opacity(0.7))
+                }
+            }
+            .frame(maxWidth: .infinity, alignment: .leading)
+            .padding(.horizontal, 10)
+            .padding(.vertical, 8)
+            .background(
+                RoundedRectangle(cornerRadius: 4)
+                    .fill(
+                        isActive
+                            ? Color.accentColor.opacity(0.15)
+                            : isSelected
+                                ? Color.accentColor
+                                : Color.clear
+                    )
+            )
+        }
+        .buttonStyle(.plain)
+        .contentShape(Rectangle())
+        .accessibilityLabel("\(input.displayName), \(action.displayName)")
     }
 }
 
