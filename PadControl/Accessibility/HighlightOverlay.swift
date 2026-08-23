@@ -5,7 +5,7 @@ final class HighlightOverlay {
     private var hideWork: DispatchWorkItem?
 
     func show(quartzRect: CGRect) {
-        let cocoa = cocoaRect(fromQuartz: quartzRect).insetBy(dx: -3, dy: -3)
+        let cocoa = ScreenCoords.cocoaRect(fromQuartz: quartzRect).insetBy(dx: -3, dy: -3)
         let panel = window ?? makeWindow()
         window = panel
         panel.setFrame(cocoa, display: true)
@@ -35,18 +35,6 @@ final class HighlightOverlay {
         panel.collectionBehavior = [.canJoinAllSpaces, .stationary, .ignoresCycle, .fullScreenAuxiliary]
         panel.contentView = StrokeView(frame: .zero)
         return panel
-    }
-
-    private func cocoaRect(fromQuartz rect: CGRect) -> CGRect {
-        let height = NSScreen.screens.first { $0.frame.origin == .zero }?.frame.height
-            ?? NSScreen.main?.frame.height
-            ?? 0
-        return CGRect(
-            x: rect.origin.x,
-            y: height - rect.origin.y - rect.height,
-            width: rect.width,
-            height: rect.height
-        )
     }
 }
 

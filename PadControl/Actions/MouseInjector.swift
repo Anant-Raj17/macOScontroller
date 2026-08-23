@@ -104,18 +104,6 @@ final class MouseInjector {
     }
 
     private func quartzRect(fromCocoa rect: CGRect) -> CGRect {
-        let height = primaryHeight
-        return CGRect(
-            x: rect.origin.x,
-            y: height - rect.origin.y - rect.height,
-            width: rect.width,
-            height: rect.height
-        )
-    }
-
-    private var primaryHeight: CGFloat {
-        NSScreen.screens.first { $0.frame.origin == .zero }?.frame.height
-            ?? NSScreen.main?.frame.height
-            ?? 0
+        ScreenCoords.quartzRect(fromCocoa: rect)
     }
 }
