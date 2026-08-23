@@ -16,7 +16,6 @@ struct PadControlApp: App {
         Settings {
             SettingsView()
                 .environmentObject(model)
-                .frame(minWidth: 640, minHeight: 520)
         }
     }
 
