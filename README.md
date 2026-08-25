@@ -2,7 +2,7 @@
 
 A native macOS menu-bar app that maps a game controller to the pointer, clicks, Mission Control, Spaces, keyboard shortcuts, and text-field focus.
 
-Swift / SwiftUI only. No Electron, no background daemon, no App Sandbox. The app lives in the menu bar (`LSUIElement`) and has no Dock icon.
+Swift / SwiftUI only. No Electron, no background daemon, no App Sandbox. The app lives in the menu bar (`LSUIElement`) and has no Dock icon. The bundled app icon (Finder, Get Info, Accessibility list) is 🎮.
 
 PadControl posts mouse and keyboard events with `CGEvent` and reads the focused window’s accessibility tree. Grant Accessibility in System Settings before it can control other apps. The source is public so that permission grant is inspectable.
 
