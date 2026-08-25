@@ -2,7 +2,7 @@
 
 A native macOS menu-bar app that maps a game controller to the pointer, clicks, Mission Control, Spaces, keyboard shortcuts, and text-field focus.
 
-Swift / SwiftUI only. No Electron, no background daemon, no App Sandbox. The app lives in the menu bar (`LSUIElement`) and has no Dock icon.
+Swift / SwiftUI only. No Electron, no background daemon, no App Sandbox. The app lives in the menu bar (`LSUIElement`) and has no Dock icon. The bundled app icon (Finder, Get Info, Accessibility list) is 🎮.
 
 PadControl posts mouse and keyboard events with `CGEvent` and reads the focused window’s accessibility tree. Grant Accessibility in System Settings before it can control other apps. The source is public so that permission grant is inspectable.
 
@@ -17,7 +17,7 @@ Pads without an extended gamepad profile can connect, but PadControl only binds 
 ## Quick start
 
 1. Build and run (see [Build](#build)).
-2. Look for the game-controller symbol in the menu bar.
+2. Look for the 🎮 emoji in the menu bar.
 3. System Settings → Privacy & Security → Accessibility → enable PadControl.
 4. Connect a controller. Mapping is on by default once Accessibility is granted.
 
@@ -62,9 +62,9 @@ xcodegen generate
 open PadControl.xcodeproj
 ```
 
-Then Run in Xcode. The app has no Dock icon; look for the game-controller symbol in the menu bar.
+Then Run in Xcode. The app has no Dock icon; look for the 🎮 emoji in the menu bar.
 
-The menu-bar icon is filled when mapping is enabled and a controller is connected, outlined when idle, and a warning triangle when Accessibility is missing.
+The menu-bar logo is 🎮 (full opacity when mapping is enabled and a controller is connected, dimmed when idle). A warning triangle appears when Accessibility is missing.
 
 Release build from the command line:
 
@@ -104,7 +104,7 @@ PadControl/
 
 ## To-do
 
-- [ ] Replace the menu bar icon with something clearer and more on-brand
+- [x] Replace the menu bar icon with something clearer and more on-brand
 - [ ] Tighten the Settings chrome now that the three panes exist (spacing, diagram, empty states)
 - [ ] Better default mappings for the remaining buttons (workflows, dictation, window management)
 
