@@ -9,8 +9,13 @@ struct PadControlApp: App {
             MenuBarView()
                 .environmentObject(model)
         } label: {
-            Image(systemName: menuIcon)
-                .symbolRenderingMode(.hierarchical)
+            if !model.isTrusted {
+                Image(systemName: "exclamationmark.triangle")
+                    .symbolRenderingMode(.hierarchical)
+            } else {
+                Text("🎮")
+                    .opacity(model.mappingEnabled && model.controllerName != nil ? 1 : 0.55)
+            }
         }
 
         Settings {
@@ -19,15 +24,5 @@ struct PadControlApp: App {
                 .frame(minWidth: SettingsView.windowSize.width, minHeight: SettingsView.windowSize.height)
         }
         .defaultSize(width: SettingsView.windowSize.width, height: SettingsView.windowSize.height)
-    }
-
-    private var menuIcon: String {
-        if !model.isTrusted {
-            return "exclamationmark.triangle"
-        }
-        if model.mappingEnabled, model.controllerName != nil {
-            return "gamecontroller.fill"
-        }
-        return "gamecontroller"
     }
 }
